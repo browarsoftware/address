@@ -10,8 +10,8 @@ Keywords: XXXX
 
 - Python 3.8
 - scipy 1.8
-- numpy >= 1.23
-- numba >= 0.56 
+- numpy 1.23
+- numba 0.56 
 - R version 3.6.2
 
 ## How to run
