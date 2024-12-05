@@ -209,12 +209,14 @@ df1$exp.mu. = log(df1$exp.mu.)
 df2 = read.csv('results\\Wloclawek\\23-11-2024 19-47-37\\jensenshannon_results.csv')
 df2$exp.mu. = log(df2$exp.mu.)
 
+df1$mean = exp(df1$exp.mu. + (df1$s ^ 2)/2)
+df2$mean = exp(df2$exp.mu. + (df2$s ^ 2)/2)
 
 sink(file = "tables/wloclawek.txt")
 id = 1
 for (a in 1:nrow(df1))
 {
-  my_str = sprintf("%d & %0.3f & %0.3f & %0.3f & %0.3f & %0.3f & %0.3f \\\\ \n",id, df1$exp.mu.[id],df1$s[id],df1$error[id], df2$exp.mu.[id],df2$s[id],df2$error[id])
+  my_str = sprintf("%d & %0.3f & %0.3f & %0.3f & %0.3f  & %0.3f & %0.3f & %0.3f & %0.3f\\\\ \n",id, df1$exp.mu.[id],df1$s[id],df1$mean[id], df1$error[id], df2$exp.mu.[id],df2$s[id],df2$mean[id], df2$error[id])
   cat(my_str)
   id = id + 1
 }
@@ -229,12 +231,14 @@ df1$exp.mu. = log(df1$exp.mu.)
 df2 = read.csv('results\\Dobczyce\\16-11-2024 00-29-04\\jensenshannon_results.csv')
 df2$exp.mu. = log(df2$exp.mu.)
 
+df1$mean = exp(df1$exp.mu. + (df1$s ^ 2)/2)
+df2$mean = exp(df2$exp.mu. + (df2$s ^ 2)/2)
 
 sink(file = "tables/Dobczyce.txt")
 id = 1
 for (a in 1:nrow(df1))
 {
-  my_str = sprintf("%d & %0.3f & %0.3f & %0.3f & %0.3f & %0.3f & %0.3f \\\\ \n",id, df1$exp.mu.[id],df1$s[id],df1$error[id], df2$exp.mu.[id],df2$s[id],df2$error[id])
+  my_str = sprintf("%d & %0.3f & %0.3f & %0.3f & %0.3f  & %0.3f & %0.3f & %0.3f & %0.3f\\\\ \n",id, df1$exp.mu.[id],df1$s[id],df1$mean[id], df1$error[id], df2$exp.mu.[id],df2$s[id],df2$mean[id], df2$error[id])
   cat(my_str)
   id = id + 1
 }
@@ -329,6 +333,24 @@ text(x = 100,
      pos = 3)
 
 
+
+X = CWW_wloclawek
+Y = df_wloclawek_mse$s
+plot(X, Y, xlab = 'WET [h]', ylab = 'Sigma', col='red', main='Sigma as function of WET, F_MSE estimation',ylim=c(0,1.6), xlim=c(0,300))
+X = CWW_dobczyce
+Y = df_dobczyce_mse$s
+points(X, Y, col='blue')
+
+legend(200, 0.3, legend=c("W³oc³awek", "Dobczyce"),  
+       col = c("red","blue"), pch=1)
+
+abline(a = coef_lm[1,1], 
+       b = coef_lm[2,1], 
+       col = "red",
+       lwd = 2)
+grid(NULL, NULL)
+
+
 ###############
 # PLOT JSD
 
@@ -388,3 +410,20 @@ text(x = 100,
                      #Round r.squared to 2 decimals
                      round(sum_lm$r.squared,2)),
      pos = 3)
+
+
+X = CWW_wloclawek
+Y = df_wloclawek_jsd$s
+plot(X, Y, xlab = 'WET [h]', ylab = 'Sigma', col='red', main='Sigma as function of WET, F_JSD estimation',ylim=c(0,1.6), xlim=c(0,300))
+X = CWW_dobczyce
+Y = df_dobczyce_jsd$s
+points(X, Y, col='blue')
+
+legend(200, 0.3, legend=c("W³oc³awek", "Dobczyce"),  
+       col = c("red","blue"), pch=1)
+
+abline(a = coef_lm[1,1], 
+       b = coef_lm[2,1], 
+       col = "red",
+       lwd = 2)
+grid(NULL, NULL)
