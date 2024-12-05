@@ -1,6 +1,6 @@
 ### Source codes for paper:
 
-# The aim of the grain: modeling the probability of~suspended sediment particles deposition in dammed reservoirs according to their diameter and overall hydrologic conditions
+# The aim of the grain: modeling the probability of suspended sediment particles deposition in dammed reservoirs according to their diameter and overall hydrologic conditions
 
 ABSTRACT XXXX 
 
